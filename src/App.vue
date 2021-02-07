@@ -2,11 +2,8 @@
   <div id="app" >
     <h1>Редактор JSON</h1>
     <hr>
-    <MainMenu />
-    <Coder 
-      v-bind:jsonstr="jsonstr"
-      v-bind:jsonerror="jsonerror"
-    />
+    <MainMenu v-bind:buttons="buttons" />
+    <Coder v-bind:buttons="buttons"/>
   </div>
 </template>
 
@@ -16,9 +13,13 @@ import MainMenu from '@/components/MainMenu'
 
 export default {
   name: 'App',
-  data: {
-    
-  },
+  data() {
+    return {
+      buttons  : {
+        autoformation: false
+      }
+    }
+  }, 
   components: {
     Coder,
     MainMenu

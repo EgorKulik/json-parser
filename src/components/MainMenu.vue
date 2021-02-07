@@ -1,7 +1,7 @@
 <template>
     <div class="menu">
         <div class="checkbox_item item">
-            <input type="checkbox" class="checkbox">
+            <input type="checkbox" class="checkbox" @change="buttons.autoformation = !buttons.autoformation">
             <label class="text item">автоматическое форматирование кода</label> 
         </div>
         <a type="submit" class="button item">Шаг назад</a>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-
+    props: ['buttons']
 }
 </script>
 
