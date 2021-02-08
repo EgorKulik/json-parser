@@ -19,6 +19,7 @@ export default {
             {
                 this.controller.iterator -= 1;
                 this.controller.jsonstr = this.controller.stringlog[this.controller.iterator];
+                this.hightLightText();
             }
         },
         next(){
@@ -26,10 +27,17 @@ export default {
             {
                 this.controller.iterator += 1;
                 this.controller.jsonstr = this.controller.stringlog[this.controller.iterator];
+                this.hightLightText();
             }
         },
         saveFile() {
             this.$emit('save-file');
+        },
+        hightLightText: function(){
+            if(this.controller.iterator != -1)
+                this.controller.jsonhtml = this.controller.jsonstr.replace(/"(\w*|\s*|\d*)*"/gi, str => "<span style=\"color: red;\">" + str + "</span>");
+            else
+                this.controller.jsonhtml = "";
         }
     }
 }

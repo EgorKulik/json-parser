@@ -19,7 +19,8 @@ export default {
         autoformation: false,
         stringlog: [],
         jsonstr: "",
-        iterator: 0
+        iterator: -1,
+        jsonhtml: ""
       }
     }
   }, 
