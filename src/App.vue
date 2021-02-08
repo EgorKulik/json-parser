@@ -51,6 +51,15 @@ export default {
   },
   created() {
     document.addEventListener('keydown', this.onKeyDown);
+  },
+  mounted() {
+    window.onload = () =>{
+      this.controller.jsonstr = window.localStorage.getItem('jsonstr');
+      this.controller.jsonhtml = this.controller.jsonstr.replace(/"(\w*|\s*|\d*)*"/gi, str => "<span style=\"color: red;\">" + str + "</span>");
+    }
+    window.onbeforeunload = () => {
+      window.localStorage.setItem('jsonstr', this.controller.jsonstr);
+    }
   }
 }
 </script>
