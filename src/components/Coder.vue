@@ -63,7 +63,6 @@ export default {
                 this.controller.stringlog.splice(-(this.controller.stringlog.length - this.controller.iterator));
                 this.controller.iterator = this.controller.stringlog.length - 1; 
             }
-
             this.controller.stringlog.push(this.controller.jsonstr);
             this.controller.iterator += 1;
         }

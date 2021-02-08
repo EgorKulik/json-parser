@@ -2,7 +2,7 @@
   <div id="app" >
     <h1>Редактор JSON</h1>
     <hr>
-    <MainMenu v-bind:controller="controller" />
+    <MainMenu v-bind:controller="controller" @save-file="saveFile()" />
     <Coder v-bind:controller="controller"/>
   </div>
 </template>
@@ -26,6 +26,30 @@ export default {
   components: {
     Coder,
     MainMenu
+  },
+  methods: {
+    saveFile: function() {
+      if(this.controller.jsonstr == "")
+        return;
+      const blob = new Blob([this.controller.jsonstr], {type: 'text/plain'})
+      const e = document.createEvent('MouseEvents'),
+      a = document.createElement('a');
+      a.download = "test.txt";
+      a.href = window.URL.createObjectURL(blob);
+      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+      e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(e);
+    },
+    onKeyDown(event) {
+      if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey && event.key === "s") {
+        event.preventDefault()
+
+        this.saveFile();
+      }
+    }
+  },
+  created() {
+    document.addEventListener('keydown', this.onKeyDown);
   }
 }
 </script>

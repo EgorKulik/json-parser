@@ -6,7 +6,7 @@
         </div>
         <a type="submit" class="button item" @click="previous()">Шаг назад</a>
         <a type="submit" class="button item" @click="next()">Шаг вперед</a>
-        <a type="submit" class="button item">Сохранить</a>
+        <a type="submit" class="button item" @click="saveFile()">Сохранить</a>
     </div>
 </template>
 
@@ -27,6 +27,9 @@ export default {
                 this.controller.iterator += 1;
                 this.controller.jsonstr = this.controller.stringlog[this.controller.iterator];
             }
+        },
+        saveFile() {
+            this.$emit('save-file');
         }
     }
 }
