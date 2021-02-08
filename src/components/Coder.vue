@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div class="text-danger" v-if="jsonstr && jsonerror">{{ jsonerror }}</div>
+        <div class="text-danger" v-if="controller.jsonstr && jsonerror">{{ jsonerror }}</div>
         <div class="text-success" v-if="!jsonerror">Valid JSON</div>
         <div class="edit_window">
             <textarea class="editor form-control" type="text" 
                 @keydown.tab.prevent="{addTab}"
                 tabindex="-1"
-                v-model="jsonstr" 
+                @input="{makeLog}"
+                v-model="controller.jsonstr" 
                 ref="jsonText" 
                 placeholder="скопируйте или начните вводить ваш JSON код...">
             </textarea>
@@ -18,11 +19,10 @@
 
 <script>
 export default {
-    props: ['buttons'],
+    props: ['controller'],
     data() {
         return {
             jsonerror: "",
-            jsonstr: "",
             lastPosition: 0
         }
     },   
@@ -31,29 +31,41 @@ export default {
             // reset error
             this.jsonerror = ""
             let jsonValue = ""
+
             try {
                 // try to parse
-                jsonValue = JSON.parse(this.jsonstr)
+                jsonValue = JSON.parse(this.controller.jsonstr)
             }
             catch(e) {
                 this.jsonerror = JSON.stringify(e.message)
                 return ""
             }
-            var chekmass = this.jsonstr.split("");
+
+            var chekmass = this.controller.jsonstr.split("");
             var lastChar = chekmass[chekmass.length - 1];
-            if(this.buttons.autoformation)
+
+            if(this.controller.autoformation)
                 if(lastChar == '}' || lastChar == '\"' || lastChar == ']' || lastChar == ',')
                     setTimeout(() => {
-                        this.jsonstr = JSON.stringify(jsonValue, null, 2);
+                        this.controller.jsonstr = JSON.stringify(jsonValue, null, 2);
                     }, 100);
         },
         addTab: function() {
             var textarea = this.$refs.jsonText;
             this.lastPosition = textarea.selectionStart;
-            this.jsonstr = this.jsonstr.substr(0,this.lastPosition) + "\t" + this.jsonstr.substr(this.lastPosition);
+            this.controller.jsonstr = this.controller.jsonstr.substr(0,this.lastPosition) + "\t" + this.controller.jsonstr.substr(this.lastPosition);
             setTimeout(() => {
                 textarea.selectionStart = textarea.selectionEnd =  this.lastPosition + 1;
             }, 1);
+        },
+        makeLog: function() {
+            if(this.controller.iterator > this.controller.stringlog.length - 1){
+                this.controller.stringlog.splice(-(this.controller.stringlog.length - this.controller.iterator));
+                this.controller.iterator = this.controller.stringlog.length - 1; 
+            }
+
+            this.controller.stringlog.push(this.controller.jsonstr);
+            this.controller.iterator += 1;
         }
     }
 }

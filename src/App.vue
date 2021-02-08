@@ -2,8 +2,8 @@
   <div id="app" >
     <h1>Редактор JSON</h1>
     <hr>
-    <MainMenu v-bind:buttons="buttons" />
-    <Coder v-bind:buttons="buttons"/>
+    <MainMenu v-bind:controller="controller" />
+    <Coder v-bind:controller="controller"/>
   </div>
 </template>
 
@@ -15,8 +15,11 @@ export default {
   name: 'App',
   data() {
     return {
-      buttons  : {
-        autoformation: false
+      controller  : {
+        autoformation: false,
+        stringlog: [],
+        jsonstr: "",
+        iterator: 0
       }
     }
   }, 
