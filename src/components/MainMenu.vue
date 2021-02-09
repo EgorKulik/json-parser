@@ -19,7 +19,8 @@ export default {
             {
                 this.controller.iterator -= 1;
                 this.controller.jsonstr = this.controller.stringlog[this.controller.iterator];
-                this.hightLightText();
+                this.hightLightText()
+                this.$emit('make-folding');
             }
         },
         next(){
@@ -28,6 +29,7 @@ export default {
                 this.controller.iterator += 1;
                 this.controller.jsonstr = this.controller.stringlog[this.controller.iterator];
                 this.hightLightText();
+                this.$emit('make-folding');
             }
         },
         saveFile() {
@@ -35,7 +37,7 @@ export default {
         },
         hightLightText: function(){
             if(this.controller.iterator != -1)
-                this.controller.jsonhtml = this.controller.jsonstr.replace(/"(\w*|\s*|\d*)*"/gi, str => "<span style=\"color: red;\">" + str + "</span>");
+                this.$emit('hightlight-text');
             else
                 this.controller.jsonhtml = "";
         }
